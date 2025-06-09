@@ -1,0 +1,28 @@
+<%- include('../layouts/main', { body: `
+  <div class="max-w-xl mx-auto mt-12 bg-white rounded-lg shadow-md p-8">
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">Edit Task</h2>
+    <form action="/tasks/${task.id}?_method=PUT" method="POST" class="space-y-6">
+      ${include('../partials/edit', { errors })}
+      <div>
+        <label for="title" class="block text-gray-700 font-semibold mb-2">Title</label>
+        <input type="text" id="title" name="title" value="${task.title}" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+      <div>
+        <label for="description" class="block text-gray-700 font-semibold mb-2">Description</label>
+        <textarea id="description" name="description" rows="3" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">${task.description}</textarea>
+      </div>
+      <div>
+        <label for="priority" class="block text-gray-700 font-semibold mb-2">Priority</label>
+        <select id="priority" name="priority" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="LOW" ${task.priority === 'LOW' ? 'selected' : ''}>Low</option>
+          <option value="MEDIUM" ${task.priority === 'MEDIUM' ? 'selected' : ''}>Medium</option>
+          <option value="HIGH" ${task.priority === 'HIGH' ? 'selected' : ''}>High</option>
+        </select>
+      </div>
+      <div class="flex justify-between items-center mt-8">
+        <a href="/tasks/${task.id}" class="text-gray-500 hover:text-gray-700">Cancel</a>
+        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-2 rounded-lg">Save Changes</button>
+      </div>
+    </form>
+  </div>
+` }) %>

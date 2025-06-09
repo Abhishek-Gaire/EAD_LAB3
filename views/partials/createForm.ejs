@@ -1,0 +1,114 @@
+<!-- Page Header -->
+<div class="flex items-center justify-between mb-8">
+  <div>
+    <h2 class="text-3xl font-bold text-gray-900 mb-2">Create New Task</h2>
+    <p class="text-gray-600">Add a new task to your list</p>
+  </div>
+  <a href="/tasks" class="flex items-center px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors">
+    <i class="fas fa-arrow-left mr-2"></i>
+    Back to Tasks
+  </a>
+</div>
+
+<!-- Error Messages -->
+<% if (errors && errors.length > 0) { %>
+  <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
+    <div class="flex items-center mb-2">
+      <i class="fas fa-exclamation-triangle mr-2"></i>
+      <strong>Please fix the following errors:</strong>
+    </div>
+    <ul class="list-disc list-inside space-y-1">
+      <% errors.forEach(function(error) { %>
+        <li><%= error.msg %></li>
+      <% }); %>
+    </ul>
+  </div>
+<% } %>
+
+<!-- Create Form -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
+  <form method="POST" action="/tasks" class="p-6 space-y-6">
+    <!-- Title Field -->
+    <div>
+      <label for="title" class="block text-sm font-medium text-gray-700 mb-2">
+        Task Title <span class="text-red-500">*</span>
+      </label>
+      <input type="text" id="title" name="title" value="<%= task.title || '' %>"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+        placeholder="Enter task title..." required>
+    </div>
+
+    <!-- Description Field -->
+    <div>
+      <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
+        Description
+      </label>
+      <textarea id="description" name="description" rows="4"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+        placeholder="Enter task description (optional)..."><%= task.description || '' %></textarea>
+    </div>
+
+    <!-- Priority and Due Date Row -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Priority Field -->
+      <div>
+        <label for="priority" class="block text-sm font-medium text-gray-700 mb-2">
+          Priority Level
+        </label>
+        <select id="priority" name="priority"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+          <option value="LOW" <%= task.priority === 'LOW' ? 'selected' : '' %>>🟢 Low Priority</option>
+          <option value="MEDIUM" <%= task.priority === 'MEDIUM' || !task.priority ? 'selected' : '' %>>🟡 Medium Priority</option>
+          <option value="HIGH" <%= task.priority === 'HIGH' ? 'selected' : '' %>>🔴 High Priority</option>
+        </select>
+      </div>
+      <!-- Due Date Field -->
+      <div>
+        <label for="dueDate" class="block text-sm font-medium text-gray-700 mb-2">
+          Due Date
+        </label>
+        <input type="date" id="dueDate" name="dueDate"
+          value="<%= task.dueDate ? new Date(task.dueDate).toISOString().split('T')[0] : '' %>"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+      </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="flex items-center justify-end space-x-4 pt-6 border-t">
+      <a href="/tasks" class="px-6 py-2 text-gray-600 hover:text-gray-800 font-medium transition-colors">
+        Cancel
+      </a>
+      <button type="submit"
+        class="px-6 py-2 bg-primary-500 text-white font-medium rounded-lg hover:bg-primary-600 transition-colors shadow-md">
+        <i class="fas fa-plus mr-2"></i>
+        Create Task
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- Tips Section -->
+<div class="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
+  <h3 class="flex items-center text-lg font-semibold text-blue-900 mb-3">
+    <i class="fas fa-lightbulb mr-2"></i>
+    Tips for Creating Effective Tasks
+  </h3>
+  <ul class="space-y-2 text-blue-800">
+    <li class="flex items-start">
+      <i class="fas fa-check text-blue-600 mt-1 mr-2 text-sm"></i>
+      <span>Use clear, actionable titles (e.g., "Review project proposal" instead of "Work stuff")</span>
+    </li>
+    <li class="flex items-start">
+      <i class="fas fa-check text-blue-600 mt-1 mr-2 text-sm"></i>
+      <span>Set realistic due dates to maintain momentum</span>
+    </li>
+    <li class="flex items-start">
+      <i class="fas fa-check text-blue-600 mt-1 mr-2 text-sm"></i>
+      <span>Use priority levels to focus on what matters most</span>
+    </li>
+    <li class="flex items-start">
+      <i class="fas fa-check text-blue-600 mt-1 mr-2 text-sm"></i>
+      <span>Add descriptions for complex tasks to provide context</span>
+    </li>
+  </ul>
+</div>
